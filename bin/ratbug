@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+
+# unless File.exist?('./Gemfile')
+#   abort 'Please run ratbug from the root of the project.'
+# end
+# pp p p p p p p p p pp p pp 2
+# require 'rubygems'
+# begin
+#   require 'bundler'
+#   Bundler.setup
+# rescue StandardError
+# end
+#
+# require 'ratbug'
+# using ActiveRecordSchemaPatcher
+# load(Rails.root.join('db', 'schema.rb'))
