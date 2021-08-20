@@ -6,12 +6,7 @@ module Ratbug
       # do nothing
     end
 
-    def timestamps(*,**)
-      columns[:created_at] = Column.new(:datetime, 'created_at', false, nil)
-      columns[:updated_at] = Column.new(:datetime, 'updated_at', false, nil)
-    end
-
-    Column::VALID_COLUMN_TYPES.filter { |r| r != :timestamps }.each do |type|
+    Column::VALID_COLUMN_TYPES.each do |type|
       define_method(type, -> (column_name, **options) {
         comment = options['comment'] || options[:comment]
         nullable = !(options['null'] == false || options[:null] == false)

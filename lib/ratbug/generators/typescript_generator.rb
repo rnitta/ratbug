@@ -10,12 +10,12 @@ module Ratbug
 
       def generate
         output = ""
-        @table.columns.values.filter { |c| c.enum.present? }.each do |column|
+        columns.values.filter { |c| c.enum.present? }.each do |column|
           output << enum_output(column)
         end
 
         output << "type #{@table.name.singularize.camelize} = {\n"
-        @table.columns.values.sort_by(&:name).each do |column|
+        columns.values.sort_by(&:name).each do |column|
           output << column_row(column)
         end
         output << "};"
@@ -32,6 +32,14 @@ module Ratbug
       end
 
       private
+
+      def columns
+        if @options[:omit_timestamps]
+          @table.columns.except(:created_at, :updated_at)
+        else
+          @table.columns
+        end
+      end
 
       def column_row(column)
         ret = "  #{column.name.camelize(:lower)}#{column.nullable ? '?' : ''}:"

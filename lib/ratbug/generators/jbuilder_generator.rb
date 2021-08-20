@@ -11,8 +11,8 @@ module Ratbug
       def generate
         singular = @table.name.singularize
         output = ""
-        output << "json.#{singular} do |#{singular}|\n"
-        @table.columns.values.sort_by(&:name).each do |column|
+        output << "json.#{singular} do\n"
+        columns.values.sort_by(&:name).each do |column|
           output << column_row(column, singular)
         end
         output << "end"
@@ -29,6 +29,14 @@ module Ratbug
       end
 
       private
+
+      def columns
+        if @options[:omit_timestamps]
+          @table.columns.except(:created_at, :updated_at)
+        else
+          @table.columns
+        end
+      end
 
       def column_row(column, receiver_name)
         "  json.#{column.name} #{receiver_name}.#{column.name}#{column_value_modifier(column)}\n"

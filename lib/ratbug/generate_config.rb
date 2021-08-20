@@ -1,13 +1,14 @@
 module Ratbug
   class GenerateConfig
     VALID_OPTION_KEYS = %i[
-    enabled_outputs
-  ts_prefer_type
-  ts_enum_output_type
-  ts_prefere_undefined
-  use_only_schema
-  output_dir
-  table_name_to_model_converter
+      enabled_outputs
+      ts_prefer_type
+      ts_enum_output_type
+      ts_prefer_undefined
+      use_only_schema
+      output_dir
+      table_name_to_model_converter
+      omit_timestamps
   ].freeze
 
     # timestamp
@@ -48,7 +49,8 @@ module Ratbug
         ts_prefere_undefined: true, # or null
         use_only_schema: false, # scan model files
         output_dir: Rails.root.join('tmp', 'ratbug'),
-        table_name_to_model_converter: -> table_name { table_name.singularize.camelize.constantize }
+        table_name_to_model_converter: -> table_name { table_name.singularize.camelize.constantize },
+        omit_timestamps: true
       }
     end
   end
